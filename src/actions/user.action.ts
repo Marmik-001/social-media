@@ -27,7 +27,7 @@ export async function syncUser() {
         // Use optional chaining to avoid null values
         email: user.emailAddresses?.[0]?.emailAddress || "",
         name:
-          user.fullName || `${user.firstName} ${user.lastName}` || "",
+          user.fullName ||user.emailAddresses?.[0].emailAddress.split("@")[0] || `${user.firstName} ${user.lastName}` || "",
         username:
           user.username ?? user.emailAddresses?.[0].emailAddress.split("@")[0],
         image: user.imageUrl || "",
@@ -65,10 +65,10 @@ export async function getUserByClerkId(clerkId: string) {
 
 export async function getDbUserId() {
   const { userId: clerkId } = await auth();
-  if (!clerkId) throw new Error(" Unathorized");
+  if (!clerkId) return null;
 
   const user = await getUserByClerkId(clerkId);
-  if (!user) throw new Error("User not found");
+  if (!user) return null;
 
   return user.id;
 }
@@ -76,6 +76,7 @@ export async function getDbUserId() {
 export async function getRandomUsers() {
   try {
     const currentUserId = await getDbUserId();
+    if(!currentUserId) return [];
     const users = await prisma.user.findMany({
       where: {
         AND: [
@@ -86,11 +87,16 @@ export async function getRandomUsers() {
           },
           {
             NOT: {
+
+
+              // following:currentUserId
+
               //todo : check if this is correct
-              following: {
+              followers: {
                 some: {
-                  followingId: currentUserId,
+                  followerId: currentUserId,
                 },
+                
               },
             },
           },

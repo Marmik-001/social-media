@@ -32,7 +32,6 @@ function FollowButton({ userId, username }: propsType) {
     }
   };
 
-  console.log("userId from props", userId);
   return (
     <Button
       className="bg-blue-500 text-white hover:bg-blue-600 hover:scale-[102%] transition duration-300 ease-in-out"

@@ -10,12 +10,12 @@ async function FollowRecommendation() {
   if (!randomUsers) return null;
 
   return (
-    <Card className="p-1 pt-5 pl-4">
+    <Card className="p-1 pt-5 pl-4 min-h-96">
       <CardTitle>Check 'em out</CardTitle>
       <CardContent className="p-0 pt-1">
-        <div className="mt-10">
+        <div className="mt-10 flex flex-col gap-2">
           {randomUsers.map((user, index) => (
-            <div key={index} className="flex items-center justify-evenly border-slate-400 border-2 space-x-2">
+            <div key={index} className="flex items-center justify-evenly rounded-lg p-px  border-slate-800 border-2 space-x-2">
               <div>
                 <img
                   src={user.image || "./avatar.png"}
