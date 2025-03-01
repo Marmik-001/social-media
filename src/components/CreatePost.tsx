@@ -72,12 +72,12 @@ function CreatePost() {
             {/* todo: add image upload */}
 
           <div className="flex  justify-between w-full">
-            <Button className="bg-black text-gray-500 p-2 hover:bg-black hover:ring-1 hover:ring-white">
+            <Button className="dark:bg-black bg-white  text-gray-500 p-2 hover:bg-slate-200 dark:hover:bg-black hover:ring-1 hover:ring-white">
               <Image size={24} className="text-gray-500   " />
               <div>Photo</div>
             </Button>
             <Button 
-            className="bg-blue-500 text-white px-4 py-2 hover:bg-black hover:ring-1 hover:ring-white"
+            className="bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 hover:ring-1 hover:ring-white"
             onClick={handleSumbit}
             disabled={(!content && !imageUrl) ||  posting}
             >
