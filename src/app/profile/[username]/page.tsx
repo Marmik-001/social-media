@@ -1,11 +1,18 @@
-import { getProfile, getUserLikedPosts, getUserPosts, isFollowing } from "@/actions/profile.action"
-import { notFound, redirect } from "next/navigation";
+import {
+  getProfile,
+  getUserLikedPosts,
+  getUserPosts,
+  isFollowing,
+} from "@/actions/profile.action";
+import { notFound } from "next/navigation";
 import ProfilePageClient from "./ProfilePageClient";
 
-
-export async function generateMetadata({params}: {params: {username: string}}) {
-  const {username} =  await params
-
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ username: string }>;
+}) {
+  const { username } = await params;
 
   const user = await getProfile(username);
   if (!user) return;
@@ -14,12 +21,15 @@ export async function generateMetadata({params}: {params: {username: string}}) {
     title: `${user.name ?? user.username}`,
     description: user.bio || `Check out ${user.username}'s profile.`,
   };
-// console.log("params", params.username)
 }
 
-
-async function ProfilePageServer({ params }: { params: { username: string } }) {
-  const user = await getProfile(params.username);
+async function ProfilePageServer({
+  params,
+}: {
+  params: Promise<{ username: string }>;
+}) {
+  const { username } = await params;
+  const user = await getProfile(username);
 
   if (!user) notFound();
 
@@ -38,4 +48,5 @@ async function ProfilePageServer({ params }: { params: { username: string } }) {
     />
   );
 }
+
 export default ProfilePageServer;
