@@ -92,7 +92,7 @@ model Follows {
 
   //relations
 
-  follower  User @relation("followers", fields: [followerId], references: [id], onDelete: Cascade)
+  followers User @relation("followers", fields: [followerId], references: [id], onDelete: Cascade)
   following User @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
 
   @@id([followerId, followingId]) //composite primary key to prevent duplicate follows

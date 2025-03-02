@@ -15,10 +15,10 @@ import Link from "next/link";
 
 async function Sidebar() {
   try {
-    const authUser = await currentUser();
-
+    // const authUser = await currentUser();
+    const authUser = await currentUser()
+    // console.log("Auth user:", authUser); // Add this line to log the auth user
     if (!authUser) {
-      console.log("No authenticated user");
       return <UnAuthenticatedSidebar />;
     }
 
@@ -28,7 +28,6 @@ async function Sidebar() {
       return <UnAuthenticatedSidebar />;
     }
 
-    // Ensure all user properties have fallbacks
     const username = user.username || "user";
     const email = user.email || "No email";
     const bio = user.bio || "No bio";
@@ -36,7 +35,6 @@ async function Sidebar() {
     const website = user.website || "#";
     const image = user.image || "./avatar.png";
 
-    // Ensure count properties exist
     const followerCount = user._count?.followers || 0;
     const followingCount = user._count?.following || 0;
 

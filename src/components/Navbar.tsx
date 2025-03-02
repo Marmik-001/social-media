@@ -5,13 +5,18 @@ import { currentUser } from "@clerk/nextjs/server";
 import { syncUser } from "@/actions/user.action";
 
 async function Navbar() {
-
-  const user = await currentUser();
-  if(user){
-    const dbUser = await syncUser();
-  }
-  else{
-    console.log('no user');
+  try {
+    const user = await currentUser();
+    if (user) {
+      const dbUser = await syncUser();
+      if (!dbUser) {
+        console.log("Failed to sync user");
+      }
+    } else {
+      console.log("No user");
+    }
+  } catch (error) {
+    console.error("Error in Navbar:", error);
   }
 
   return (
@@ -34,4 +39,5 @@ async function Navbar() {
     </nav>
   );
 }
+
 export default Navbar;
